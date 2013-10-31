@@ -243,10 +243,6 @@ namespace FancyWordCard
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-            SetSetting("Interval", ((double)Interval / 10).ToString());
-            SetSetting("Pos",String.Format("{0} {1}",this.Left,this.Top));
-            SetSetting("Size",String.Format("{0} {1}",this.Width,this.Height));
-            SetSetting("Color", String.Format("{0} {1} {2}", MainColor.R, MainColor.G, MainColor.B));
             Application.Current.Shutdown();
         }
 
@@ -319,6 +315,14 @@ namespace FancyWordCard
             BLabel.Content = tmp;
             BLabel.Background = new SolidColorBrush(clr);
             UpdateBGColor();
+        }
+
+        private void Window_Closed_1(object sender, EventArgs e)
+        {
+            SetSetting("Interval", ((double)Interval / 10).ToString());
+            SetSetting("Pos", String.Format("{0} {1}", this.Left, this.Top));
+            SetSetting("Size", String.Format("{0} {1}", this.Width, this.Height));
+            SetSetting("Color", String.Format("{0} {1} {2}", MainColor.R, MainColor.G, MainColor.B));
         }
     }
 }
