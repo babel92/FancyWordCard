@@ -85,9 +85,20 @@ namespace FancyWordCard
         {
             label2.Margin = new Thickness(-200, 0, 0, 0);
             label2.Opacity = 0;
-            MainColor=Color.FromArgb(0xaa,0xc8,0xc8,0xff);
             CurrentShownLabel = label1;
-            this.Background = new SolidColorBrush(MainColor);
+
+            MainColor = Color.FromArgb(0xaa, 0xc8, 0xc8, 0xff);
+            string color = GetSetting("Color");
+            if (color != null)
+            {
+                string[] rgb = color.Split(' ');
+                MainColor.R = Byte.Parse(rgb[0]);
+                MainColor.G = Byte.Parse(rgb[1]);
+                MainColor.B = Byte.Parse(rgb[2]);
+            }
+            RSldr.Value = MainColor.R;
+            GSldr.Value = MainColor.G;
+            BSldr.Value = MainColor.B;
 
             string interval=GetSetting("Interval");
             if(interval==null)
@@ -235,6 +246,7 @@ namespace FancyWordCard
             SetSetting("Interval", ((double)Interval / 10).ToString());
             SetSetting("Pos",String.Format("{0} {1}",this.Left,this.Top));
             SetSetting("Size",String.Format("{0} {1}",this.Width,this.Height));
+            SetSetting("Color", String.Format("{0} {1} {2}", MainColor.R, MainColor.G, MainColor.B));
             Application.Current.Shutdown();
         }
 
@@ -260,6 +272,53 @@ namespace FancyWordCard
                 return;
             Interval = (int)(e.NewValue * 5);
             IntInd.Content = e.NewValue / 2 + "s";
+        }
+
+        private void UpdateBGColor()
+        {
+            this.Background = new SolidColorBrush(MainColor);
+        }
+
+        private void RSldr_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            Color clr=new Color();
+            byte tmp = (byte)e.NewValue;
+            clr.A = 0xff;
+            clr.R = (byte)0xff;
+            clr.G = (byte)(0xff - tmp);
+            clr.B = (byte)(0xff - tmp);
+            MainColor.R = tmp;
+            RLabel.Content = tmp;
+            RLabel.Background = new SolidColorBrush(clr);
+            UpdateBGColor();
+        }
+
+        private void GSldr_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            Color clr = new Color();
+            byte tmp = (byte)e.NewValue;
+            clr.A = 0xff;
+            clr.G = (byte)0xff;
+            clr.R = (byte)(0xff - tmp);
+            clr.B = (byte)(0xff - tmp);
+            MainColor.G = tmp;
+            GLabel.Content = tmp;
+            GLabel.Background = new SolidColorBrush(clr);
+            UpdateBGColor();
+        }
+
+        private void BSldr_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            Color clr = new Color();
+            byte tmp = (byte)e.NewValue;
+            clr.A = 0xff;
+            clr.B = (byte)0xff;
+            clr.G = (byte)(0xff - tmp);
+            clr.R = (byte)(0xff - tmp);
+            MainColor.B = tmp;
+            BLabel.Content = tmp;
+            BLabel.Background = new SolidColorBrush(clr);
+            UpdateBGColor();
         }
     }
 }

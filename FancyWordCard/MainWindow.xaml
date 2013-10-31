@@ -22,7 +22,24 @@
                 <Slider x:Name="IntSldr" Grid.Column="1" Grid.ColumnSpan="2" Width="50" Minimum="1" Value="1" ValueChanged="Slider_ValueChanged_1" SmallChange="1" IsSnapToTickEnabled="True" Maximum="20"/>
                 <Label x:Name="IntInd" Grid.Column="3" Content="s" Grid.ColumnSpan="2" Width="auto"/>
             </Grid>
-
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Slider x:Name="RSldr" Grid.ColumnSpan="2" ValueChanged="RSldr_ValueChanged" Maximum="255"/>
+                <Slider x:Name="GSldr" Grid.Row="1" Grid.ColumnSpan="2" ValueChanged="GSldr_ValueChanged" Maximum="255"/>
+                <Slider x:Name="BSldr" Grid.Row="2" Grid.ColumnSpan="2" ValueChanged="BSldr_ValueChanged" Maximum="255"/>
+                <Label x:Name="RLabel" Grid.Column="2"/>
+                <Label x:Name="GLabel" Grid.Row="1" Grid.Column="2"/>
+                <Label x:Name="BLabel" Grid.Row="2" Grid.Column="2"/>
+            </Grid>
             <MenuItem Header="Change Dictionary" Click="MenuItem_Click_2"/>
             <MenuItem Header="Exit" Click="MenuItem_Click_1"/>
         </ContextMenu>
