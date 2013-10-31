@@ -31,10 +31,24 @@ namespace WordCard
                 String tmp = sr.ReadLine();
                 while (tmp != null)
                 {
-                    m_content.Add(new Entry(tmp.Substring(2, tmp.LastIndexOf('#') - 2), tmp.Substring(tmp.LastIndexOf('#')+1 , tmp.Length - tmp.LastIndexOf('#')-1)));
+                    if (tmp.Length == 0)
+                        return;
+                    string[] split = tmp.Split('\t');
+                    m_content.Add(new Entry(split[0],split[1]));
                     tmp = sr.ReadLine();
                 }
+                sr.Close();
             }
+        }
+
+        public void WriteDictionary(String Path)
+        {
+            StreamWriter sw = new StreamWriter(Path);
+            foreach (Entry e in m_content)
+            {
+                sw.WriteLine(e.Word + '\t' + e.Explanation);
+            }
+            sw.Close();
         }
 
         public String GetRandomEntry()
