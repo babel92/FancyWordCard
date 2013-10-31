@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -53,35 +54,24 @@ namespace FancyWordCard
             InitializeComponent();
         }
 
+        private DoubleAnimation hidanim1;
+        private ThicknessAnimation hidanim2;
+        private DoubleAnimation curanim1;
+        private ThicknessAnimation curanim2;
+
         private void SwitchLabel()
         {
-            var hidanim1 = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromSeconds(0.1)));
-            Storyboard.SetTargetName(hidanim1, CurrentShownLabel.Name);
-            Storyboard.SetTargetProperty(hidanim1, new PropertyPath(TextBlock.OpacityProperty));
 
-            var hidanim2 = new ThicknessAnimation(new Thickness(10, 10, 0, 0), new Thickness(-200, 10, 0, 0), new Duration(TimeSpan.FromSeconds(0.3)));
-            Storyboard.SetTargetName(hidanim2, CurrentShownLabel.Name);
-            Storyboard.SetTargetProperty(hidanim2, new PropertyPath(TextBlock.MarginProperty));
+            CurrentShownLabel.BeginAnimation(TextBlock.OpacityProperty, hidanim1);
+            CurrentShownLabel.BeginAnimation(TextBlock.MarginProperty, hidanim2);
 
             if (CurrentShownLabel == label1)
                 CurrentShownLabel = label2;
             else
                 CurrentShownLabel = label1;
 
-            var curanim1 = new DoubleAnimation(0, 1, new Duration(TimeSpan.FromSeconds(0.3)));
-            Storyboard.SetTargetName(curanim1, CurrentShownLabel.Name);
-            Storyboard.SetTargetProperty(curanim1, new PropertyPath(TextBlock.OpacityProperty));
-
-            var curanim2 = new ThicknessAnimation(new Thickness(200, 10, 0, 0), new Thickness(10, 10, 0, 0), new Duration(TimeSpan.FromSeconds(0.3)));
-            Storyboard.SetTargetName(curanim2, CurrentShownLabel.Name);
-            Storyboard.SetTargetProperty(curanim2, new PropertyPath(TextBlock.MarginProperty));
-
-            var story = new Storyboard();
-            story.Children.Add(curanim1);
-            story.Children.Add(curanim2);
-            story.Children.Add(hidanim1);
-            story.Children.Add(hidanim2);
-            story.Begin(grid);
+            CurrentShownLabel.BeginAnimation(TextBlock.OpacityProperty, curanim1);
+            CurrentShownLabel.BeginAnimation(TextBlock.MarginProperty, curanim2);
         }
 
         private void Show(String text)
@@ -124,17 +114,10 @@ namespace FancyWordCard
             }
 
             var curanim1 = new DoubleAnimation(0, 1, new Duration(TimeSpan.FromSeconds(0.3)));
-            Storyboard.SetTargetName(curanim1, CurrentShownLabel.Name);
-            Storyboard.SetTargetProperty(curanim1, new PropertyPath(Label.OpacityProperty));
-
             var curanim2 = new ThicknessAnimation(new Thickness(200, 10, 0, 0), new Thickness(10, 10, 0, 0), new Duration(TimeSpan.FromSeconds(0.3)));
-            Storyboard.SetTargetName(curanim2, CurrentShownLabel.Name);
-            Storyboard.SetTargetProperty(curanim2, new PropertyPath(Label.MarginProperty));
 
-            var story = new Storyboard();
-            story.Children.Add(curanim1);
-            story.Children.Add(curanim2);
-            story.Begin(grid);
+            CurrentShownLabel.BeginAnimation(TextBlock.OpacityProperty, curanim1);
+            CurrentShownLabel.BeginAnimation(TextBlock.MarginProperty, curanim2);
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
@@ -152,7 +135,7 @@ namespace FancyWordCard
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
             string dict = GetSetting("Dict");
-            if (dict == null)
+            if (dict == null||!File.Exists(dict))
             {
                 OpenFileDialog dlg = new OpenFileDialog();
                 dlg.Title = "Please select dictionary file";
@@ -168,9 +151,17 @@ namespace FancyWordCard
                 }
             }
             
+
             Dict = new Dictionary(dict);
 
             Interval = 20;
+
+            hidanim1 = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromSeconds(0.1)));
+            hidanim2 = new ThicknessAnimation(new Thickness(10, 10, 0, 0), new Thickness(-200, 10, 0, 0), new Duration(TimeSpan.FromSeconds(0.3)));
+
+            curanim1 = new DoubleAnimation(0, 1, new Duration(TimeSpan.FromSeconds(0.3)));
+            curanim2 = new ThicknessAnimation(new Thickness(200, 10, 0, 0), new Thickness(10, 10, 0, 0), new Duration(TimeSpan.FromSeconds(0.3)));
+
             InitUI();
             label1.Text = Dict.GetRandomEntry();
 

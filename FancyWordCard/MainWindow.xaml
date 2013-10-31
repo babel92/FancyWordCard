@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="FancyWordCard" Height="61.671" Width="206" Loaded="Window_Loaded_1" SizeChanged="Window_SizeChanged_1" WindowStyle="None" AllowsTransparency="True" Background="#AAC8C8FF" ResizeMode="CanResizeWithGrip" MouseDown="Window_MouseDown_1" MouseUp="Window_MouseUp_1" MouseMove="Window_MouseMove_1" MouseRightButtonUp="Window_MouseRightButtonUp_1" MouseEnter="Window_MouseEnter_1" MouseLeave="Window_MouseLeave_1" MinWidth="302" MinHeight="127.271" Icon="Artua-Soccer-Referee-cards.ico">
     <Window.ContextMenu>
-        <ContextMenu Uid="menu" x:Name="menu">
+        <ContextMenu Uid="menu" x:Name="menu" Width="200">
             <MenuItem Header="Topmost" IsCheckable="True" Checked="MenuItem_Checked_1" Unchecked="MenuItem_Unchecked_1" IsChecked="True"></MenuItem>
             <Separator/>
 
