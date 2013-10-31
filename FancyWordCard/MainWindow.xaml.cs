@@ -174,7 +174,7 @@ namespace FancyWordCard
             InitUI();
             label1.Text = Dict.GetRandomEntry();
 
-            TimerCounter = 10;
+            TimerCounter = Interval;
             Timer = new System.Windows.Threading.DispatcherTimer();
             Timer.Tick += new EventHandler(dispatcherTimer_Tick);
             Timer.Interval = new TimeSpan(1000000);
