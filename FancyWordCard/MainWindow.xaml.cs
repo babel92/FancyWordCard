@@ -324,5 +324,11 @@ namespace FancyWordCard
             SetSetting("Size", String.Format("{0} {1}", this.Width, this.Height));
             SetSetting("Color", String.Format("{0} {1} {2}", MainColor.R, MainColor.G, MainColor.B));
         }
+
+        private void Window_Drop_1(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            Dict = new Dictionary(files[0]);
+        }
     }
 }
