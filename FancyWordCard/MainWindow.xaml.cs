@@ -103,7 +103,6 @@ namespace FancyWordCard
             string interval=GetSetting("Interval");
             if(interval==null)
             {
-                SetSetting("Inverval",((double)Interval/10).ToString());
                 IntSldr.Value = Interval / 5;
             }
             else
@@ -328,6 +327,7 @@ namespace FancyWordCard
         private void Window_Drop_1(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            SetSetting("Dict", files[0]);
             Dict = new Dictionary(files[0]);
         }
     }

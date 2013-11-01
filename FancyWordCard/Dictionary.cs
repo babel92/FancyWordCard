@@ -53,7 +53,7 @@ namespace WordCard
 
         public String GetRandomEntry()
         {
-            Entry item=m_content[m_random.Next(m_content.Count-1)];
+            Entry item=m_content[m_random.Next(m_content.Count)];
             return item.Word + '\n' + item.Explanation;
         }
     }
